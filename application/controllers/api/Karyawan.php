@@ -3,20 +3,20 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 
-class Mahasiswa extends REST_Controller {
+class Karyawan extends REST_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Mhs_model');
+        $this->load->model('Kry_model');
         $this->methods['index_get']['limit'] = 3;
     }
 
     public function index_get() {
         $id = $this->get('id');
         if ($id === null) {
-            $mhs = $this->Mhs_model->getMhs();
+            $mhs = $this->Kry_model->getMhs();
         } else {
-            $mhs = $this->Mhs_model->getMhs($id);
+            $mhs = $this->Kry_model->getMhs($id);
         }
 
         if (!empty($mhs)) {
@@ -31,7 +31,7 @@ class Mahasiswa extends REST_Controller {
             $this->response(
                 [
                     'status' => FALSE,
-                    'data' => 'Mahasiswa tidak di temukan'
+                    'data' => 'Karyawan tidak di temukan'
                 ],
                 REST_Controller::HTTP_NOT_FOUND
             );
@@ -39,7 +39,7 @@ class Mahasiswa extends REST_Controller {
     }
 
     public function index_delete() {
-        $this->load->model('Mhs_model');
+        $this->load->model('Kry_model');
         $id = $this->delete('id');
 
         if ($id === null) {
@@ -51,11 +51,11 @@ class Mahasiswa extends REST_Controller {
                 REST_Controller::HTTP_BAD_REQUEST
             );
         } else {
-            if ($this->Mhs_model->delteMhs($id) > 0) {
+            if ($this->Kry_model->delteMhs($id) > 0) {
                 $this->response(
                     [
                         'status' => TRUE,
-                        'data' => 'Berhasi menghapus satu mahasiswa'
+                        'data' => 'Berhasi menghapus satu karyawan'
                     ],
                     REST_Controller::HTTP_NO_CONTENT
                 );
@@ -63,7 +63,7 @@ class Mahasiswa extends REST_Controller {
                 $this->response(
                     [
                         'status' => FALSE,
-                        'data' => 'Mahasiswa tidak di temukan'
+                        'data' => 'Karyawan tidak di temukan'
                     ],
                     REST_Controller::HTTP_BAD_REQUEST
                 );
@@ -72,7 +72,7 @@ class Mahasiswa extends REST_Controller {
     }
 
     public function index_post() {
-        $this->load->model('Mhs_model');
+        $this->load->model('Kry_model');
         $data = [
             'nrp' => $this->post('nrp'),
             'nama' => $this->post('nama'),
@@ -81,11 +81,11 @@ class Mahasiswa extends REST_Controller {
         ];
 
         if (!empty($data['nrp']) && !empty($data['nama']) && !empty($data['email']) && !empty($data['jurusan'])) {
-            if ($this->Mhs_model->addMhs($data) > 0) {
+            if ($this->Kry_model->addMhs($data) > 0) {
                 $this->response(
                     [
                         'status' => TRUE,
-                        'data' => 'Berhasil menambah satu mahasiswa'
+                        'data' => 'Berhasil menambah satu karyawan'
                     ],
                     REST_Controller::HTTP_CREATED
                 );
@@ -93,7 +93,7 @@ class Mahasiswa extends REST_Controller {
                 $this->response(
                     [
                         'status' => FALSE,
-                        'data' => 'Gagal menambah mahasiswa baru'
+                        'data' => 'Gagal menambah karyawan baru'
                     ],
                     REST_Controller::HTTP_BAD_REQUEST
                 );
@@ -110,7 +110,7 @@ class Mahasiswa extends REST_Controller {
     }
 
     public function index_put() {
-        $this->load->model('Mhs_model');
+        $this->load->model('Kry_model');
         $id = $this->put('id');
         $data = [
             'nrp' => $this->put('nrp'),
@@ -120,11 +120,11 @@ class Mahasiswa extends REST_Controller {
         ];
 
         if (!empty($id) && !empty($data['nrp']) && !empty($data['nama']) && !empty($data['email']) && !empty($data['jurusan'])) {
-            if ($this->Mhs_model->updateMhs($data, $id) > 0) {
+            if ($this->Kry_model->updateMhs($data, $id) > 0) {
                 $this->response(
                     [
                         'status' => TRUE,
-                        'data' => 'Berhasil mengubah satu mahasiswa'
+                        'data' => 'Berhasil mengubah satu karyawan'
                     ],
                     REST_Controller::HTTP_NO_CONTENT
                 );
@@ -132,7 +132,7 @@ class Mahasiswa extends REST_Controller {
                 $this->response(
                     [
                         'status' => FALSE,
-                        'data' => 'Gagal mengubah satu mahasiswa'
+                        'data' => 'Gagal mengubah satu karyawan'
                     ],
                     REST_Controller::HTTP_BAD_REQUEST
                 );
@@ -149,4 +149,4 @@ class Mahasiswa extends REST_Controller {
     }
 }
 
-/* End of file: Mahasiswa.php */
+/* End of file: karyawan.php */
